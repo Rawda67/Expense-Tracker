@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Dart (GDG on Campus Benha\\Task1.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "GDG on Campus Benha\\Task1.dart"
+        }
+    ]
+}
