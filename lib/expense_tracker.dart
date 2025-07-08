@@ -16,7 +16,7 @@ void addExpense({
     if (expense.containsKey(category)) {
       expense[category] = expense[category]! + amount;
       print(
-        "Category '$category' already exists. Amount updated to ${expense[category]!.toStringAsFixed(2)}\$.",
+        "Category $category already exists. Amount updated to ${expense[category]!.toStringAsFixed(2)}\$.",
       );
       return;
     }

@@ -47,7 +47,7 @@ void main() {
             categoryChosen.trim(),
           );
           print(
-            "Total in '${categoryChosen.trim()}': \$${totalByCategory.toStringAsFixed(2)}",
+            "Total in ${categoryChosen.trim()} : ${totalByCategory.toStringAsFixed(2)}\$",
           );
         } else {
           print("Invalid category.");
