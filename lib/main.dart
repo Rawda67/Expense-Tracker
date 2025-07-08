@@ -1,73 +1,65 @@
-// Base class: Person
-class Person {
-  String name;
-  int age;
-  String id;
-
-  Person(this.name, this.age, this.id);
-
-  void displayInfo() {
-    print("Name: $name, Age: $age, ID: $id");
-  }
-}
-
-class Student extends Person {
-  double gpa;
-
-  Student(String name, int age, String id, this.gpa) : super(name, age, id);
-
-  @override
-  void displayInfo() {
-    super.displayInfo();
-    print("GPA: $gpa");
-  }
-}
-
-class Instructor extends Person {
-  double salary;
-
-  Instructor(String name, int age, String id, this.salary)
-      : super(name, age, id);
-
-  @override
-  void displayInfo() {
-    super.displayInfo();
-    print("Salary: \$${salary}");
-  }
-}
-
-class Course {
-  String courseName;
-  Instructor instructor;
-  List<Student> students = [];
-
-  Course(this.courseName, this.instructor);
-
-  void addStudent(Student student) {
-    students.add(student);
-  }
-
-  void displayStudents() {
-    print("\nStudents enrolled in $courseName:");
-    for (var student in students) {
-      student.displayInfo();
-      print("-------------------");
-    }
-  }
-}
+import 'expense_tracker.dart';
+import 'dart:io';
 
 void main() {
-  Instructor instructor = Instructor("Dr. mohamed", 40, "I22", 50000);
-  print("Instructor Details:");
-  instructor.displayInfo();
+  List<Map<String, double>> expenses = [];
+  int? choice;
 
-  Student student1 = Student("Rana", 20, "S101", 3.8);
-  Student student2 = Student("Rania", 20, "S102", 3.5);
+  do {
+    printMenu();
+    int choice = int.parse(stdin.readLineSync()!.trim());
 
-  Course course = Course("Computer Science", instructor);
+    switch (choice) {
+      case 1:
+        print("Enter amount:");
+        double amount = double.parse(stdin.readLineSync()!.trim());
 
-  course.addStudent(student1);
-  course.addStudent(student2);
+        if (amount <= 0) {
+          print("Invalid amount, please enter a number greater than 0");
+          break;
+        }
 
-  course.displayStudents();
+        print("Enter category:");
+        String? category = stdin.readLineSync();
+
+        if (category != null && category.trim().isNotEmpty) {
+          addExpense(
+            expenses: expenses,
+            amount: amount,
+            category: category.trim(),
+          );
+        } else {
+          print("Invalid input. Please try again.");
+        }
+        break;
+
+      case 2:
+        double total = getTotalSpending(expenses: expenses);
+        print("Total Spending: ${total.toStringAsFixed(2)}\$");
+        break;
+
+      case 3:
+        print("Enter category to view:");
+        String? categoryChosen = stdin.readLineSync();
+        if (categoryChosen != null && categoryChosen.trim().isNotEmpty) {
+          double totalByCategory = getCategoryTotal(
+            expenses,
+            categoryChosen.trim(),
+          );
+          print(
+            "Total in '${categoryChosen.trim()}': \$${totalByCategory.toStringAsFixed(2)}",
+          );
+        } else {
+          print("Invalid category.");
+        }
+        break;
+
+      case 4:
+        print("Exiting program!");
+        break;
+
+      default:
+        print("Invalid choice. Please select a number from the menu.");
+    }
+  } while (choice != 4);
 }
